@@ -13,7 +13,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ShoppingCart, Menu, X, ArrowRight, Dumbbell, Shirt, Zap, Instagram, Facebook, Youtube, CreditCard, QrCode, Copy, CheckCircle2, LayoutDashboard, UserPlus, Users, Activity, TrendingUp, DollarSign, LogIn, LogOut, User as UserIcon, ShieldAlert, Phone, Music2, MessageCircle } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
-import { auth } from './firebase';
+import { collection, addDoc, serverTimestamp, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
+import { auth, db } from './firebase';
 import { PRODUCTS } from './constants';
 import { Category, Product } from './types';
 
@@ -43,6 +44,24 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [quoteCount, setQuoteCount] = useState<number | null>(null);
+
+  const isAdmin = useMemo(() => user?.email === ADMIN_EMAIL, [user]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      const fetchStats = async () => {
+        try {
+          const q = query(collection(db, 'quotes'));
+          const snapshot = await getDocs(q);
+          setQuoteCount(snapshot.size);
+        } catch (err) {
+          console.error("Error fetching stats:", err);
+        }
+      };
+      fetchStats();
+    }
+  }, [isAdmin]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -52,7 +71,47 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  const isAdmin = useMemo(() => user?.email === ADMIN_EMAIL, [user]);
+  const handleFinalizeOrder = async () => {
+    if (!user) {
+      const provider = new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (error) {
+        console.error("Login failed:", error);
+        return;
+      }
+    }
+
+    const items = cartDetails.map(item => ({
+      id: item.id,
+      name: item.name,
+      quantity: item.quantity,
+      category: item.category
+    }));
+
+    try {
+      // Save to Firestore first
+      await addDoc(collection(db, 'quotes'), {
+        customerId: auth.currentUser?.uid || user?.uid,
+        customerEmail: auth.currentUser?.email || user?.email,
+        items: items,
+        status: 'pending',
+        createdAt: serverTimestamp()
+      });
+
+      // Then open WhatsApp
+      const message = `Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original. Meus itens: ${items.map(i => `${i.name} (${i.quantity}x)`).join(', ')}`;
+      window.open(`https://wa.me/5500000000000?text=${encodeURIComponent(message)}`, '_blank');
+      
+      // Clear cart and reset
+      setCartItems([]);
+      setIsCartOpen(false);
+      setPaymentStep('cart');
+    } catch (error) {
+      console.error("Error saving quote:", error);
+      alert("Erro ao processar pedido. Tente novamente.");
+    }
+  };
 
   const handleLogin = async () => {
     const provider = new GoogleAuthProvider();
@@ -299,15 +358,20 @@ export default function App() {
                         <MessageCircle size={24} className="text-green-500" />
                         Finalizar via WhatsApp
                       </h3>
+                      {!user && (
+                        <p className="text-[10px] font-bold text-primary-pink uppercase mb-4 animate-pulse">
+                          * É necessário estar logado para enviar seu pedido.
+                        </p>
+                      )}
                       <p className="text-sm text-white/60 mb-6 leading-relaxed">
                         Como este é um catálogo exclusivo da marca **Eu Fico Fitness Original**, o fechamento do seu pedido é feito diretamente com nossa equipe via WhatsApp para garantir o melhor atendimento e disponibilidade.
                       </p>
                       
                       <button 
-                        onClick={() => window.open(`https://wa.me/5500000000000?text=${encodeURIComponent('Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original. Meus itens: ' + cartDetails.map(i => `${i.name} (${i.quantity}x)`).join(', '))}`, '_blank')}
+                        onClick={handleFinalizeOrder}
                         className="w-full bg-green-500 text-white py-4 font-bold uppercase flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-transform"
                       >
-                        Enviar Pedido para Vendas <MessageCircle size={20} />
+                       {user ? 'Enviar Pedido para Vendas' : 'Entrar para Enviar Pedido'} <MessageCircle size={20} />
                       </button>
                     </div>
 
@@ -773,7 +837,7 @@ export default function App() {
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
                     { label: 'Total Membros', value: '1.240', change: '+12%', icon: Users },
-                    { label: 'Pedidos de Orçamento', value: '342', change: '+18%', icon: MessageCircle },
+                    { label: 'Pedidos de Orçamento', value: quoteCount !== null ? quoteCount : '342', change: '+18%', icon: MessageCircle },
                     { label: 'Treinos Registrados', value: '8.432', change: '+24%', icon: Activity },
                     { label: 'Engajamento', value: '94%', change: '+2%', icon: TrendingUp },
                   ].map((stat, i) => (

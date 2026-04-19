@@ -12,16 +12,18 @@
       },
       "required": ["uid", "email", "role"]
     },
-    "Sale": {
-      "title": "venda",
-      "description": "Registros de vendas para relatórios.",
+    "QuoteRequest": {
+      "title": "pedido de orçamento",
+      "description": "Registros de intenção de compra enviados via WhatsApp.",
       "type": "object",
       "properties": {
-        "amount": { "type": "number" },
-        "date": { "type": "string", "format": "date-time" },
-        "items": { "type": "array" }
+        "customerId": { "type": "string" },
+        "customerEmail": { "type": "string", "format": "email" },
+        "items": { "type": "array" },
+        "status": { "type": "string", "enum": ["pending", "contacted", "closed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
       },
-      "required": ["amount", "date"]
+      "required": ["items", "status", "createdAt"]
     }
   },
   "firestore": {
@@ -29,9 +31,9 @@
       "schema": "User",
       "description": "Perfis de usuários protegidos."
     },
-    "/sales/{saleId}": {
-      "schema": "Sale",
-      "description": "Dados de vendas para o dashboard."
+    "/quotes/{quoteId}": {
+      "schema": "QuoteRequest",
+      "description": "Dados de orçamentos para o dashboard."
     }
   }
 }

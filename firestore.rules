@@ -17,14 +17,23 @@ service cloud.firestore {
     // Collection Rules
     // ===============================================================
 
+    // Validações básicas
+    function isValidQuote(data) {
+      return data.keys().hasAll(['items', 'status', 'createdAt']) &&
+             data.items is list && data.items.size() > 0 &&
+             data.status in ['pending', 'contacted', 'closed'] &&
+             data.createdAt == request.time;
+    }
+
     match /users/{uid} {
       allow read, write: if isAuthenticated() && request.auth.uid == uid;
       allow read: if isAdmin();
     }
 
-    match /sales/{saleId} {
-      allow read: if isAdmin();
-      allow write: if false; // Only automated or manual for now
+    match /quotes/{quoteId} {
+      allow create: if isAuthenticated() && isValidQuote(request.resource.data);
+      allow read: if isAdmin() || (isAuthenticated() && resource.data.customerId == request.auth.uid);
+      allow update, delete: if isAdmin();
     }
     
     match /{document=**} {
