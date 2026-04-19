@@ -24,7 +24,7 @@ const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
 
-const APP_LOGO = "/assets/logo.png"; // Altere para o caminho do arquivo que você subir
+const APP_LOGO = "assets/logo.png"; // Altere para o caminho do arquivo que você subir
 
 const REPORT_DATA = [
   { name: 'Jan', sales: 4000, users: 240 },
@@ -230,7 +230,12 @@ export default function App() {
         <div className="flex items-center gap-4">
           {user ? (
             <div className="hidden md:flex items-center gap-3 bg-white/5 pl-2 pr-4 py-1 rounded-full border border-white/10 group relative">
-              <img src={user.photoURL || ''} alt={user.displayName || ''} className="w-8 h-8 rounded-full border border-soft-blue" />
+              <img 
+                src={user.photoURL || ''} 
+                alt={user.displayName || ''} 
+                className="w-8 h-8 rounded-full border border-soft-blue" 
+                referrerPolicy="no-referrer"
+              />
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold text-white/40 uppercase">Admin</span>
                 <span className="text-xs font-bold leading-none">{user.displayName?.split(' ')[0]}</span>
@@ -315,7 +320,12 @@ export default function App() {
                       cartDetails.map((item) => (
                         <div key={item.id} className="flex gap-4 group">
                           <div className="w-24 h-24 bg-neutral-900 border border-white/10 overflow-hidden">
-                            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                            <img 
+                              src={item.image} 
+                              alt={item.name} 
+                              className="w-full h-full object-cover" 
+                              referrerPolicy="no-referrer"
+                            />
                           </div>
                           <div className="flex-1">
                             <h4 className="font-display text-lg uppercase leading-none mb-1">{item.name}</h4>
@@ -737,7 +747,7 @@ export default function App() {
                 className="relative aspect-video lg:aspect-square bg-neutral-900 border-2 border-white/10 overflow-hidden block group"
               >
                 <img 
-                  src="/assets/videomulher_euficofitnessoriginal_tiktok_link.png" 
+                  src="assets/videomulher_euficofitnessoriginal_tiktok_link.png" 
                   alt="TikTok Origins" 
                   className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform duration-700"
                   referrerPolicy="no-referrer"
