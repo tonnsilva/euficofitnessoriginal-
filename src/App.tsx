@@ -21,6 +21,8 @@ import { Category, Product } from './types';
 type View = 'home' | 'history' | 'tips' | 'reports';
 
 const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
+const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
+const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
 
 const APP_LOGO = "/assets/logo.png"; // Altere para o caminho do arquivo que você subir
 
@@ -100,8 +102,9 @@ export default function App() {
       });
 
       // Then open WhatsApp
-      const message = `Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original. Meus itens: ${items.map(i => `${i.name} (${i.quantity}x)`).join(', ')}`;
-      window.open(`https://wa.me/5500000000000?text=${encodeURIComponent(message)}`, '_blank');
+      const itemsString = items.map(i => `• ${i.name} (${i.quantity}x)`).join('\n');
+      const message = `${WHATSAPP_MESSAGE_BASE}\n\n*Meus itens:*\n${itemsString}\n\n_E-mail do cliente: ${auth.currentUser?.email}_`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
       
       // Clear cart and reset
       setCartItems([]);
@@ -441,8 +444,8 @@ export default function App() {
             <div className="h-[2px] w-12 bg-white/10 my-4" />
             
             <a 
-              href="https://wa.me/5500000000000" 
-              target="_blank" 
+              href={`https://wa.me/${WHATSAPP_NUMBER}`} 
+              target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 font-display text-2xl uppercase italic text-green-500"
             >
@@ -922,7 +925,12 @@ export default function App() {
               Eleve seu jogo com o lifestyle fitness original. Suplementos Lin de alta performance e streetwear feito para quem não aceita menos que o topo.
             </p>
             <div className="flex flex-col gap-4">
-              <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/60 hover:text-white transition-colors group">
+              <a 
+                href={`https://wa.me/${WHATSAPP_NUMBER}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center gap-3 text-white/60 hover:text-white transition-colors group"
+              >
                 <MessageCircle size={18} className="text-green-500" />
                 <span>WhatsApp Vendas</span>
               </a>
