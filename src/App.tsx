@@ -730,18 +730,23 @@ export default function App() {
                   </a>
                 </div>
               </motion.div>
-              <div className="relative aspect-video lg:aspect-square bg-neutral-900 border-2 border-white/10 overflow-hidden">
+              <a 
+                href="https://www.tiktok.com/@euficofitnessoriginal" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="relative aspect-video lg:aspect-square bg-neutral-900 border-2 border-white/10 overflow-hidden block group"
+              >
                 <img 
                   src="/assets/videomulher_euficofitnessoriginal_tiktok_link.png" 
                   alt="TikTok Origins" 
-                  className="w-full h-full object-cover scale-110 hover:scale-125 transition-transform duration-700"
+                  className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                   <p className="text-[10px] font-bold tracking-widest uppercase text-white/70 italic-display">TikTok Community</p>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="bg-white p-4 rounded-full animate-pulse shadow-[0_0_30px_rgba(255,255,255,0.4)] w-24 h-24">
+                  <div className="bg-white p-4 rounded-full animate-pulse shadow-[0_0_30px_rgba(255,255,255,0.4)] w-24 h-24 group-hover:scale-110 transition-transform">
                     <img 
                       src={APP_LOGO} 
                       alt="Brand Logo" 
@@ -750,7 +755,7 @@ export default function App() {
                     />
                   </div>
                 </div>
-              </div>
+              </a>
             </section>
           </div>
         )}
@@ -937,7 +942,14 @@ export default function App() {
               <div className="flex gap-6 pt-4">
                 <a href="#" className="text-white/40 hover:text-primary-pink transition-colors"><Instagram size={20} /></a>
                 <a href="#" className="text-white/40 hover:text-primary-pink transition-colors"><Facebook size={20} /></a>
-                <a href="https://www.tiktok.com/@euficofitnessoriginal" className="text-white/40 hover:text-primary-pink transition-colors"><Music2 size={20} /></a>
+                <a 
+                  href="https://www.tiktok.com/@euficofitnessoriginal" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-white/40 hover:text-primary-pink transition-colors"
+                >
+                  <Music2 size={20} />
+                </a>
                 <a href="#" className="text-white/40 hover:text-primary-pink transition-colors"><Youtube size={20} /></a>
               </div>
             </div>
