@@ -210,7 +210,7 @@ export default function App() {
             Dicas
           </button>
           <a 
-            href="https://www.tiktok.com/@euficofitnessoriginal" 
+            href="https://www.tiktok.com/@euficofitness" 
             target="_blank" 
             rel="noopener noreferrer"
             className="hover:text-primary-pink transition-colors flex items-center gap-2"
@@ -433,7 +433,7 @@ export default function App() {
               Dicas
             </button>
             <a 
-              href="https://www.tiktok.com/@euficofitnessoriginal" 
+              href="https://www.tiktok.com/@euficofitness" 
               target="_blank" 
               rel="noopener noreferrer"
               className="font-display text-4xl uppercase italic hover:text-soft-blue flex items-center gap-3"
@@ -638,14 +638,14 @@ export default function App() {
           <div className="flex whitespace-nowrap animate-marquee font-display text-6xl md:text-8xl items-center gap-8">
             <span className="italic uppercase">EU FICO FITNESS</span>
             <Zap size={64} fill="black" />
-            <span className="italic uppercase">TIKTOK @EUFICOFITNESSORIGINAL</span>
+            <span className="italic uppercase">TIKTOK @EUFICOFITNESS</span>
             <Dumbbell size={64} fill="black" />
             <span className="italic uppercase">LIN SUPPLEMENTS</span>
             <Shirt size={64} fill="black" />
             
             <span className="italic uppercase">EU FICO FITNESS</span>
             <Zap size={64} fill="black" />
-            <span className="italic uppercase">TIKTOK @EUFICOFITNESSORIGINAL</span>
+            <span className="italic uppercase">TIKTOK @EUFICOFITNESS</span>
             <Dumbbell size={64} fill="black" />
             <span className="italic uppercase">LIN SUPPLEMENTS</span>
             <Shirt size={64} fill="black" />
@@ -721,7 +721,7 @@ export default function App() {
                 </p>
                 <div className="flex gap-4 mb-8">
                   <a 
-                    href="https://www.tiktok.com/@euficofitnessoriginal" 
+                    href="https://www.tiktok.com/@euficofitness" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 bg-white text-black px-6 py-3 font-bold uppercase italic hover:bg-soft-blue transition-colors rounded-sm"
@@ -731,7 +731,7 @@ export default function App() {
                 </div>
               </motion.div>
               <a 
-                href="https://www.tiktok.com/@euficofitnessoriginal" 
+                href="https://www.tiktok.com/@euficofitness" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="relative aspect-video lg:aspect-square bg-neutral-900 border-2 border-white/10 overflow-hidden block group"
@@ -943,7 +943,7 @@ export default function App() {
                 <a href="#" className="text-white/40 hover:text-primary-pink transition-colors"><Instagram size={20} /></a>
                 <a href="#" className="text-white/40 hover:text-primary-pink transition-colors"><Facebook size={20} /></a>
                 <a 
-                  href="https://www.tiktok.com/@euficofitnessoriginal" 
+                  href="https://www.tiktok.com/@euficofitness" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-white/40 hover:text-primary-pink transition-colors"
