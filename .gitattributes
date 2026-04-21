@@ -1,0 +1,7 @@
+# Force images to be treated as binary files to prevent GitHub from showing them as text
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ico binary
+*.webp binary
