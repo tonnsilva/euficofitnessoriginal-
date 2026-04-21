@@ -18,15 +18,14 @@ import { auth, db } from './firebase';
 import { PRODUCTS } from './constants';
 import { Category, Product } from './types';
 
-// Import Assets as Modules (Best practice for Vite/Vercel)
-import APP_LOGO from './assets/logo.png';
-import TIKTOK_IMG from './assets/tiktok.png';
-
 type View = 'home' | 'history' | 'tips' | 'reports';
 
 const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
+
+const APP_LOGO = "/logo2.png";
+const TIKTOK_IMG = "/videomulher_euficofitnessoriginal_tiktok_link.png";
 
 const REPORT_DATA = [
   { name: 'Jan', sales: 4000, users: 240 },
