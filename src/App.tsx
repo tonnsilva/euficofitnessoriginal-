@@ -173,11 +173,11 @@ export default function App() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-fitness-charcoal/80 backdrop-blur-md border-b-2 border-white/10 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-16 h-16 relative rounded-full overflow-hidden flex items-center justify-center border-2 border-white/10 shadow-lg shrink-0">
+          <div className="w-20 h-20 relative flex items-center justify-center shrink-0 bg-white/5 rounded-xl border border-white/10">
             <img 
               src={APP_LOGO} 
               alt="Eu Fico Fitness Logo" 
-              className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+              className="w-full h-full object-contain p-2"
             />
           </div>
           <span className="font-display text-2xl tracking-tighter uppercase italic flex items-baseline gap-1">
@@ -754,11 +754,11 @@ export default function App() {
                   <p className="text-[10px] font-bold tracking-widest uppercase text-white/70 italic-display">TikTok Community</p>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="bg-white/10 backdrop-blur-sm p-2 rounded-full animate-pulse shadow-[0_0_30px_rgba(255,255,255,0.2)] w-32 h-32 group-hover:scale-110 transition-transform flex items-center justify-center overflow-hidden border-2 border-white/20">
+                  <div className="bg-white/10 backdrop-blur-sm p-4 rounded-full animate-pulse shadow-[0_0_30px_rgba(255,255,255,0.2)] w-32 h-32 group-hover:scale-110 transition-transform flex items-center justify-center overflow-hidden border-2 border-white/20">
                     <img 
                       src={APP_LOGO} 
                       alt="Brand Logo" 
-                      className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 </div>
@@ -920,11 +920,11 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2 space-y-8">
             <div className="flex items-center justify-center md:justify-start gap-4 flex-wrap">
-              <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center shrink-0 border-2 border-white/10 shadow-xl">
+              <div className="w-24 h-24 rounded-2xl overflow-hidden flex items-center justify-center shrink-0 border-2 border-white/10 shadow-xl bg-white/5 p-4">
                 <img 
                   src={APP_LOGO} 
                   alt="Eu Fico Fitness Logo" 
-                  className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <span className="font-display text-3xl tracking-tighter uppercase italic flex items-baseline gap-2 flex-wrap">
