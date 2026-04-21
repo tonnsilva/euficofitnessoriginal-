@@ -18,14 +18,15 @@ import { auth, db } from './firebase';
 import { PRODUCTS } from './constants';
 import { Category, Product } from './types';
 
+// Import Assets as Modules (Best practice for Vite/Vercel)
+import APP_LOGO from './assets/logo.png';
+import TIKTOK_IMG from './assets/tiktok.png';
+
 type View = 'home' | 'history' | 'tips' | 'reports';
 
 const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
-
-const APP_LOGO = "/logo.png";
-const TIKTOK_IMG = "/tiktok.png";
 
 const REPORT_DATA = [
   { name: 'Jan', sales: 4000, users: 240 },
@@ -176,11 +177,10 @@ export default function App() {
         <div className="flex items-center gap-3">
           <div className="w-16 h-16 relative rounded-full overflow-hidden flex items-center justify-center border-2 border-white/10 shadow-lg shrink-0">
             <img 
-              src={`${APP_LOGO}?v=2`} 
+              src={APP_LOGO} 
               alt="Eu Fico Fitness Logo" 
               className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
               referrerPolicy="no-referrer"
-              onError={(e) => console.error("DEBUG: Falha ao carregar logo em " + APP_LOGO, e)}
             />
           </div>
           <span className="font-display text-2xl tracking-tighter uppercase italic flex items-baseline gap-1">

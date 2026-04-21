@@ -1,4 +1,6 @@
 import { Product } from './types';
+import imgBone from './assets/bone.png';
+import imgCamiseta from './assets/camiseta.png';
 
 export const PRODUCTS: Product[] = [
   {
@@ -23,7 +25,7 @@ export const PRODUCTS: Product[] = [
     name: 'Boné Original Eu Fico Fitness - Azul',
     price: 89.90,
     category: 'apparel',
-    image: '/bone.png',
+    image: imgBone,
     description: 'Boné premium azul com o logo oficial Eu Fico Fitness Original bordado. Ajuste perfeito e estilo inconfundível.',
     tag: 'NEW LOGO'
   },
@@ -32,7 +34,7 @@ export const PRODUCTS: Product[] = [
     name: 'Camiseta Feminina Eu Fico Fitness',
     price: 79.90,
     category: 'apparel',
-    image: '/camiseta.png',
+    image: imgCamiseta,
     description: 'Camiseta feminina premium com o nome Eu Fico Fitness Original. Conforto e elegância para seu treino.',
     tag: 'FEMININE'
   },
