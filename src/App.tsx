@@ -24,15 +24,8 @@ const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
 
-// Helper to resolve asset paths correctly on any environment (Vercel/Local)
-const getAssetUrl = (path: string) => {
-  // Ensure path doesn't start with leading slash for base resolution
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-  return `${import.meta.env.BASE_URL}${cleanPath}`;
-};
-
-const APP_LOGO = getAssetUrl('assets/logo2.png');
-const TIKTOK_IMG = getAssetUrl('assets/videomulher_euficofitnessoriginal_tiktok_link.png');
+const APP_LOGO = "/assets/logo.png";
+const TIKTOK_IMG = "/assets/tiktok.png";
 
 const REPORT_DATA = [
   { name: 'Jan', sales: 4000, users: 240 },
