@@ -24,7 +24,7 @@ const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
 
-const APP_LOGO = "/assets/logo2.png"; 
+const APP_LOGO = "assets/logo2.png"; 
 
 const REPORT_DATA = [
   { name: 'Jan', sales: 4000, users: 240 },
@@ -173,11 +173,12 @@ export default function App() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-fitness-charcoal/80 backdrop-blur-md border-b-2 border-white/10 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-20 h-20 relative flex items-center justify-center shrink-0 bg-white/5 rounded-xl border border-white/10">
+          <div className="w-16 h-16 relative rounded-full overflow-hidden flex items-center justify-center border-2 border-white/10 shadow-lg shrink-0">
             <img 
               src={APP_LOGO} 
               alt="Eu Fico Fitness Logo" 
-              className="w-full h-full object-contain p-2"
+              className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+              referrerPolicy="no-referrer"
             />
           </div>
           <span className="font-display text-2xl tracking-tighter uppercase italic flex items-baseline gap-1">
@@ -746,9 +747,10 @@ export default function App() {
                 className="relative aspect-video lg:aspect-square bg-neutral-900 border-2 border-white/10 overflow-hidden block group"
               >
                 <img 
-                  src="/assets/videomulher_euficofitnessoriginal_tiktok_link.png" 
+                  src="assets/videomulher_euficofitnessoriginal_tiktok_link.png" 
                   alt="TikTok Origins" 
                   className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                   <p className="text-[10px] font-bold tracking-widest uppercase text-white/70 italic-display">TikTok Community</p>
@@ -758,7 +760,8 @@ export default function App() {
                     <img 
                       src={APP_LOGO} 
                       alt="Brand Logo" 
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+                      referrerPolicy="no-referrer"
                     />
                   </div>
                 </div>
@@ -920,11 +923,12 @@ export default function App() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2 space-y-8">
             <div className="flex items-center justify-center md:justify-start gap-4 flex-wrap">
-              <div className="w-24 h-24 rounded-2xl overflow-hidden flex items-center justify-center shrink-0 border-2 border-white/10 shadow-xl bg-white/5 p-4">
+              <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center shrink-0 border-2 border-white/10 shadow-xl">
                 <img 
                   src={APP_LOGO} 
                   alt="Eu Fico Fitness Logo" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+                  referrerPolicy="no-referrer"
                 />
               </div>
               <span className="font-display text-3xl tracking-tighter uppercase italic flex items-baseline gap-2 flex-wrap">
