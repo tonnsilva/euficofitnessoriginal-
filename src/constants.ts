@@ -23,7 +23,7 @@ export const PRODUCTS: Product[] = [
     name: 'Boné Original Eu Fico Fitness - Azul',
     price: 89.90,
     category: 'apparel',
-    image: 'assets/bone_euficofitnessoriginal_logo_azul.png',
+    image: '/assets/bone_euficofitnessoriginal_logo_azul.png',
     description: 'Boné premium azul com o logo oficial Eu Fico Fitness Original bordado. Ajuste perfeito e estilo inconfundível.',
     tag: 'NEW LOGO'
   },
@@ -32,7 +32,7 @@ export const PRODUCTS: Product[] = [
     name: 'Camiseta Feminina Eu Fico Fitness',
     price: 79.90,
     category: 'apparel',
-    image: 'assets/camiseta_fem_euficofitnessoriginal_nome.png',
+    image: '/assets/camiseta_fem_euficofitnessoriginal_nome.png',
     description: 'Camiseta feminina premium com o nome Eu Fico Fitness Original. Conforto e elegância para seu treino.',
     tag: 'FEMININE'
   },
@@ -49,7 +49,7 @@ export const PRODUCTS: Product[] = [
     name: 'Camiseta Original Performance (Selo Original)',
     price: 94.90,
     category: 'apparel',
-    image: 'https://storage.googleapis.com/static.antigravity.dev/attachments/5cf216ce-9069-42b8-936d-002ece167098/957aa3e3-789a-4c2f-aa84-b0a37333a36c.png',
+    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2adfcd?q=80&w=2070&auto=format&fit=crop',
     description: 'A camiseta oficial do time! Estampa frontal "Eu Fico Fitness Original" em ambiente real de treino. Tecnologia dry-fit premium.',
     tag: 'CINEMATIC'
   },

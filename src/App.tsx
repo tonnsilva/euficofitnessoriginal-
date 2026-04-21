@@ -24,7 +24,7 @@ const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
 
-const APP_LOGO = "assets/logo2.png"; 
+const APP_LOGO = "/assets/logo2.png"; 
 
 const REPORT_DATA = [
   { name: 'Jan', sales: 4000, users: 240 },
@@ -747,7 +747,7 @@ export default function App() {
                 className="relative aspect-video lg:aspect-square bg-neutral-900 border-2 border-white/10 overflow-hidden block group"
               >
                 <img 
-                  src="assets/videomulher_euficofitnessoriginal_tiktok_link.png" 
+                  src="/assets/videomulher_euficofitnessoriginal_tiktok_link.png" 
                   alt="TikTok Origins" 
                   className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform duration-700"
                   referrerPolicy="no-referrer"
