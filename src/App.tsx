@@ -24,8 +24,8 @@ const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
 
-const APP_LOGO = "/assets/logo.png";
-const TIKTOK_IMG = "/assets/tiktok.png";
+const APP_LOGO = "/media/logo.png";
+const TIKTOK_IMG = "/media/tiktok.png";
 
 const REPORT_DATA = [
   { name: 'Jan', sales: 4000, users: 240 },
