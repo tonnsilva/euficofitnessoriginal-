@@ -24,7 +24,7 @@ const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
 
-const APP_LOGO = "assets/logo.png"; // Altere para o caminho do arquivo que você subir
+const APP_LOGO = "assets/logo2.png"; 
 
 const REPORT_DATA = [
   { name: 'Jan', sales: 4000, users: 240 },
@@ -173,11 +173,11 @@ export default function App() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-fitness-charcoal/80 backdrop-blur-md border-b-2 border-white/10 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 relative">
+          <div className="w-16 h-16 relative rounded-full overflow-hidden flex items-center justify-center border-2 border-white/10 shadow-lg shrink-0">
             <img 
               src={APP_LOGO} 
               alt="Eu Fico Fitness Logo" 
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -756,11 +756,11 @@ export default function App() {
                   <p className="text-[10px] font-bold tracking-widest uppercase text-white/70 italic-display">TikTok Community</p>
                 </div>
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="bg-white p-4 rounded-full animate-pulse shadow-[0_0_30px_rgba(255,255,255,0.4)] w-24 h-24 group-hover:scale-110 transition-transform">
+                  <div className="bg-white/10 backdrop-blur-sm p-2 rounded-full animate-pulse shadow-[0_0_30px_rgba(255,255,255,0.2)] w-32 h-32 group-hover:scale-110 transition-transform flex items-center justify-center overflow-hidden border-2 border-white/20">
                     <img 
                       src={APP_LOGO} 
                       alt="Brand Logo" 
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
                       referrerPolicy="no-referrer"
                     />
                   </div>
@@ -922,24 +922,26 @@ export default function App() {
       <footer className="bg-neutral-950 px-6 py-20">
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
           <div className="col-span-1 md:col-span-2 space-y-8">
-            <div className="flex items-center gap-3">
-              <img 
-                src={APP_LOGO} 
-                alt="Eu Fico Fitness Logo" 
-                className="w-16 h-16 object-contain"
-                referrerPolicy="no-referrer"
-              />
-              <span className="font-display text-3xl tracking-tighter uppercase italic flex items-baseline gap-2">
+            <div className="flex items-center justify-center md:justify-start gap-4 flex-wrap">
+              <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center shrink-0 border-2 border-white/10 shadow-xl">
+                <img 
+                  src={APP_LOGO} 
+                  alt="Eu Fico Fitness Logo" 
+                  className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+              <span className="font-display text-3xl tracking-tighter uppercase italic flex items-baseline gap-2 flex-wrap">
                 <span className="text-primary-pink">EU</span> 
                 <span className="text-soft-blue">FICO</span> 
                 <span className="text-brand-gray">FITNESS</span>
                 <span className="font-sans font-light text-sm tracking-[0.3em] opacity-60">ORIGINAL</span>
               </span>
             </div>
-            <p className="text-brand-gray/60 max-w-sm">
+            <p className="text-brand-gray/60 max-w-sm mx-auto md:mx-0 text-center md:text-left">
               Eleve seu jogo com o lifestyle fitness original. Suplementos Lin de alta performance e streetwear feito para quem não aceita menos que o topo.
             </p>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col items-center md:items-start gap-4">
               <a 
                 href={`https://wa.me/${WHATSAPP_NUMBER}`} 
                 target="_blank" 
@@ -949,7 +951,7 @@ export default function App() {
                 <MessageCircle size={18} className="text-green-500" />
                 <span>WhatsApp Vendas</span>
               </a>
-              <div className="flex gap-6 pt-4">
+              <div className="flex gap-6 pt-4 justify-center md:justify-start">
                 <a href="#" className="text-white/40 hover:text-primary-pink transition-colors"><Instagram size={20} /></a>
                 <a href="#" className="text-white/40 hover:text-primary-pink transition-colors"><Facebook size={20} /></a>
                 <a 
