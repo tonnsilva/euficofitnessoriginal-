@@ -24,7 +24,7 @@ const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
 const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
 
-const APP_LOGO = "/assets/images/logo-euficofitness.jpg";
+const APP_LOGO = "/assets/images/logo-euficofitness-new.jpg";
 const TIKTOK_IMG = "/assets/images/tiktok-euficofitness.jpg";
 
 const REPORT_DATA = [
@@ -174,11 +174,11 @@ export default function App() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-fitness-charcoal/80 backdrop-blur-md border-b-2 border-white/10 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-16 h-16 relative rounded-full overflow-hidden flex items-center justify-center border-2 border-white/10 shadow-lg shrink-0">
+          <div className="w-12 h-12 relative rounded-full overflow-hidden flex items-center justify-center border-2 border-white/10 shadow-lg shrink-0">
             <img 
               src={`${APP_LOGO}?t=${new Date().getTime()}`} 
               alt="Eu Fico Fitness Logo" 
-              className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+              className="w-full h-full object-contain"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -784,16 +784,37 @@ export default function App() {
               <div className="space-y-8">
                 <div className="bg-white/5 border-2 border-primary-pink p-8 brutalist-shadow">
                   <h3 className="font-display text-4xl uppercase italic mb-6 flex items-center gap-3 text-primary-pink">
-                    <Activity size={32} /> Exercícios
+                    <Activity size={32} /> Exercícios e Ciência
                   </h3>
-                  <div className="space-y-6">
-                    <div className="border-l-2 border-white/20 pl-6">
-                      <h4 className="font-bold uppercase text-lg mb-2">Treino de Força</h4>
-                      <p className="text-white/60 text-sm">Priorize movimentos compostos como agachamento, supino e levantamento terra. A carga deve ser desafiadora, mas com técnica impecável.</p>
+                  <div className="space-y-8">
+                    <div className="border-l-2 border-primary-pink/50 pl-6">
+                      <h4 className="font-bold uppercase text-lg mb-2">Treino de Hipertrofia</h4>
+                      <p className="text-white/60 text-sm mb-4 leading-relaxed">
+                        Para ganho de massa, a ciência recomenda trabalhar com 60-80% de 1RM e focar na progressão de carga. De acordo com o <strong>American College of Sports Medicine (ACSM)</strong>, o treinamento de resistência é fundamental para a saúde muscular.
+                      </p>
+                      <a 
+                        href="https://www.acsm.org/education-resources/trending-topics-resources/physical-activity-guidelines" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-primary-pink text-[10px] font-black uppercase tracking-widest hover:underline flex items-center gap-2"
+                      >
+                        Ver Diretrizes ACSM <ArrowRight size={12} />
+                      </a>
                     </div>
-                    <div className="border-l-2 border-white/20 pl-6">
-                      <h4 className="font-bold uppercase text-lg mb-2">Cardio Estratégico</h4>
-                      <p className="text-white/60 text-sm">O HIIT é excelente para queima de gordura, mas não ignore o cardio moderado de longa duração para saúde cardiovascular.</p>
+
+                    <div className="border-l-2 border-primary-pink/50 pl-6">
+                      <h4 className="font-bold uppercase text-lg mb-2">Cardio Estratégico (HIIT)</h4>
+                      <p className="text-white/60 text-sm mb-4 leading-relaxed">
+                        Estudos da <strong>Mayo Clinic</strong> demonstram que o treinamento intervalado de alta intensidade (HIIT) é superior para queima calórica e saúde metabólica em menos tempo.
+                      </p>
+                      <a 
+                        href="https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/interval-training/art-20044588" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-primary-pink text-[10px] font-black uppercase tracking-widest hover:underline flex items-center gap-2"
+                      >
+                        Estudo Mayo Clinic <ArrowRight size={12} />
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -802,16 +823,37 @@ export default function App() {
               <div className="space-y-8">
                 <div className="bg-white/5 border-2 border-soft-blue p-8 brutalist-shadow-blue">
                   <h3 className="font-display text-4xl uppercase italic mb-6 flex items-center gap-3 text-soft-blue">
-                    <Shirt size={32} /> Alimentação
+                    <Shirt size={32} /> Nutrição e Saúde
                   </h3>
-                  <div className="space-y-6">
-                    <div className="border-l-2 border-white/20 pl-6">
-                      <h4 className="font-bold uppercase text-lg mb-2">Macronutrientes</h4>
-                      <p className="text-white/60 text-sm">Proteínas são a base da reconstrução. Carboídratos são o seu combustível. Gorduras regulam seus hormônios. Equilibre sempre.</p>
+                  <div className="space-y-8">
+                    <div className="border-l-2 border-soft-blue/50 pl-6">
+                      <h4 className="font-bold uppercase text-lg mb-2">A Importância das Proteínas</h4>
+                      <p className="text-white/60 text-sm mb-4 leading-relaxed">
+                        A Sociedade Brasileira de Nutrição ressalta que o consumo adequado de proteínas (1.6g a 2.2g por kg/peso) é essencial para quem treina. Saiba mais sobre os macronutrientes no portal do <strong>Ministério da Saúde</strong>.
+                      </p>
+                      <a 
+                        href="https://www.gov.br/saude/pt-br/assuntos/saude-brasil/eu-quero-me-alimentar-melhor" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-soft-blue text-[10px] font-black uppercase tracking-widest hover:underline flex items-center gap-2"
+                      >
+                        Guia Alimentar Federal <ArrowRight size={12} />
+                      </a>
                     </div>
-                    <div className="border-l-2 border-white/20 pl-6">
-                      <h4 className="font-bold uppercase text-lg mb-2">Hidratação</h4>
-                      <p className="text-white/60 text-sm">Beba no mínimo 35ml de água por quilo de peso corporal. A hidratação é a chave para o metabolismo ativo.</p>
+
+                    <div className="border-l-2 border-soft-blue/50 pl-6">
+                      <h4 className="font-bold uppercase text-lg mb-2">Poder da Hidratação</h4>
+                      <p className="text-white/60 text-sm mb-4 leading-relaxed">
+                        A <strong>Harvard Health</strong> afirma que a água é o nutriente mais ignorado. Ela regula a temperatura, lubrifica articulações e transporta nutrientes para as células.
+                      </p>
+                      <a 
+                        href="https://www.health.harvard.edu/staying-healthy/the-importance-of-staying-hydrated" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-soft-blue text-[10px] font-black uppercase tracking-widest hover:underline flex items-center gap-2"
+                      >
+                        Artigo Harvard Health <ArrowRight size={12} />
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -921,18 +963,18 @@ export default function App() {
 
       {/* Footer */}
       <footer className="bg-neutral-950 px-6 py-20">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 border-b-2 border-white/5 pb-16">
           <div className="col-span-1 md:col-span-2 space-y-8">
             <div className="flex items-center justify-center md:justify-start gap-4 flex-wrap">
               <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center shrink-0 border-2 border-white/10 shadow-xl">
                 <img 
                   src={APP_LOGO} 
                   alt="Eu Fico Fitness Logo" 
-                  className="w-full h-full object-cover object-[center_57%] scale-[1.35]"
+                  className="w-full h-full object-contain"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <span className="font-display text-3xl tracking-tighter uppercase italic flex items-baseline gap-2 flex-wrap">
+              <span className="font-display text-3xl tracking-tighter uppercase italic flex items-baseline gap-2 flex-wrap text-center md:text-left">
                 <span className="text-primary-pink">EU</span> 
                 <span className="text-soft-blue">FICO</span> 
                 <span className="text-brand-gray">FITNESS</span>
@@ -994,9 +1036,22 @@ export default function App() {
           </div>
         </div>
         
-        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t-2 border-white/5 text-center text-brand-gray/30 text-xs font-bold uppercase tracking-widest flex flex-col items-center gap-2">
-          <span>© 2026 Eu Fico Fitness Original. All rights reserved.</span>
-          <span className="text-[10px] opacity-50">Developed by <span className="text-primary-pink">Holfoman Tech</span></span>
+        <div className="max-w-7xl mx-auto pt-8 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-wrap justify-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">
+            <button onClick={() => { setView('home'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">Início</button>
+            <button onClick={() => { setView('history'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">Sobre</button>
+            <button onClick={() => { setView('tips'); window.scrollTo(0, 0); }} className="hover:text-white transition-colors">Dicas</button>
+            <a href="https://www.tiktok.com/@euficofitness" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Social</a>
+          </div>
+
+          <div className="text-center md:text-right space-y-2">
+            <div className="text-brand-gray/30 text-[10px] font-bold uppercase tracking-widest">
+              © 2026 Eu Fico Fitness Original. All rights reserved.
+            </div>
+            <div className="text-[10px] font-bold uppercase tracking-widest opacity-50">
+              Developed by <span className="text-primary-pink">Holfoman Tech</span>
+            </div>
+          </div>
         </div>
       </footer>
 

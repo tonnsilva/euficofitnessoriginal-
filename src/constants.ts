@@ -45,6 +45,15 @@ export const PRODUCTS: Product[] = [
     description: 'Camiseta de algodão premium com o selo Eu Fico Fitness. Conforto e estilo para qualquer lugar.',
   },
   {
+    id: 'camiseta-basica-black',
+    name: 'Camiseta Básica Black Eu Fico Fitness',
+    price: 84.90,
+    category: 'apparel',
+    image: '/assets/images/camisabasicablack_euficofitness.png',
+    description: 'Camiseta preta básica premium com a logo circular Eu Fico Fitness Original. O equilíbrio perfeito entre o casual e o fitness.',
+    tag: 'NEW ARRIVAL'
+  },
+  {
     id: 'camiseta-performance-original',
     name: 'Camiseta Original Performance (Selo Original)',
     price: 94.90,
