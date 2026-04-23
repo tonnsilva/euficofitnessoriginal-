@@ -10,7 +10,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingCart, Menu, X, ArrowRight, Dumbbell, Shirt, Zap, Instagram, Facebook, Youtube, CreditCard, QrCode, Copy, CheckCircle2, LayoutDashboard, UserPlus, Users, Activity, TrendingUp, DollarSign, LogIn, LogOut, User as UserIcon, ShieldAlert, Phone, Music2, MessageCircle } from 'lucide-react';
+import { ShoppingCart, Menu, X, ArrowRight, Dumbbell, Shirt, Zap, Instagram, Facebook, Youtube, CreditCard, QrCode, Copy, CheckCircle2, LayoutDashboard, UserPlus, Users, Activity, TrendingUp, DollarSign, LogIn, LogOut, User as UserIcon, ShieldAlert, Phone, Music2, MessageCircle, Printer, Download } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
 import { collection, addDoc, serverTimestamp, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
@@ -22,7 +22,7 @@ type View = 'home' | 'history' | 'tips' | 'reports';
 
 const ADMIN_EMAIL = 'tonnsilva1@gmail.com';
 const WHATSAPP_NUMBER = '5585981077338'; // ALTERE PARA O SEU NÚMERO (Ex: 55 + DDD + Numero)
-const WHATSAPP_MESSAGE_BASE = 'Olá! Gostaria de fazer um pedido no Eu Fico Fitness Original.';
+const WHATSAPP_MESSAGE_BASE = 'Olá! Seja bem-vindo ao Eu Fico Fitness Original. Quero transformar meu corpo e gostaria de fazer o seguinte pedido:';
 
 const APP_LOGO = "/assets/images/logo-euficofitness-new.jpg";
 const TIKTOK_IMG = "/assets/images/tiktok-euficofitness.jpg";
@@ -48,6 +48,8 @@ export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [quoteCount, setQuoteCount] = useState<number | null>(null);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const isAdmin = useMemo(() => user?.email === ADMIN_EMAIL, [user]);
 
@@ -129,6 +131,25 @@ export default function App() {
   const handleLogout = () => {
     signOut(auth);
     setView('home');
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    setNewsletterStatus('loading');
+    try {
+      await addDoc(collection(db, 'newsletter'), {
+        email: newsletterEmail,
+        createdAt: serverTimestamp()
+      });
+      setNewsletterStatus('success');
+      setNewsletterEmail('');
+      setTimeout(() => setNewsletterStatus('idle'), 3000);
+    } catch (error) {
+      console.error("Newsletter error:", error);
+      setNewsletterStatus('error');
+      setTimeout(() => setNewsletterStatus('idle'), 3000);
+    }
   };
 
   const cartDetails = useMemo(() => {
@@ -596,12 +617,24 @@ export default function App() {
                       </div>
                     )}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                      <button 
-                        onClick={() => addToCart(product.id)}
-                        className="bg-primary-pink text-white p-4 rounded-full hover:scale-110 active:scale-90 transition-transform brutalist-shadow-blue"
-                      >
-                        <ShoppingCart size={24} />
-                      </button>
+                      {product.salesPageUrl ? (
+                        <a 
+                          href={product.salesPageUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-primary-pink text-white px-6 py-3 font-bold uppercase text-xs flex items-center gap-2 hover:scale-110 active:scale-95 transition-transform brutalist-shadow-blue"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Ir para o Vendedor <ArrowRight size={16} />
+                        </a>
+                      ) : (
+                        <button 
+                          onClick={() => addToCart(product.id)}
+                          className="bg-primary-pink text-white p-4 rounded-full hover:scale-110 active:scale-90 transition-transform brutalist-shadow-blue"
+                        >
+                          <ShoppingCart size={24} />
+                        </button>
+                      )}
                     </div>
                   </div>
                   <div className="flex justify-between items-start mb-2">
@@ -610,7 +643,7 @@ export default function App() {
                         {product.name}
                       </h3>
                       <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest group-hover:text-soft-blue transition-colors">
-                        {product.category === 'supplements' ? 'Lin Supplements' : 'Original Apparel'}
+                        {product.category === 'supplements' ? 'Suplementação Original' : 'Original Apparel'}
                       </p>
                     </div>
                   </div>
@@ -631,7 +664,7 @@ export default function App() {
               {[
                 { title: 'Constância', text: 'O resultado não vem do treino perfeito, mas do treino que você não falta.', icon: Zap },
                 { title: 'Alimentação', text: 'Coma limpo. Seu corpo é o reflexo do combustível que você coloca nele.', icon: Shirt },
-                { title: 'Suplementação', text: 'Suplementos Lin são seus aliados, não substitutos. Use com foco.', icon: CreditCard },
+                { title: 'Suplementação', text: 'Suplementos de alta performance são seus aliados, não substitutos. Use com foco.', icon: CreditCard },
                 { title: 'Mentalidade', text: 'O corpo alcança o que a mente acredita. Mantenha o foco no objetivo.', icon: Dumbbell },
               ].map((tip, i) => (
                 <div key={i} className="border-l-4 border-black pl-6 py-2">
@@ -872,7 +905,7 @@ export default function App() {
                 <h2 className="font-display text-5xl uppercase italic tracking-tighter">
                   ACESSO <span className="text-red-500">NEGADO</span>
                 </h2>
-                <p className="text-white/40 max-w-md">Este dashboard é restrito à administração. Se você é o dono, por favor realize o login.</p>
+                <p className="text-white/40 max-w-md">Este dashboard é restrito exclusivamente ao dono (tonnsilva1@gmail.com).</p>
                 <button 
                   onClick={handleLogin}
                   className="bg-primary-pink text-white px-8 py-4 font-bold uppercase transition-all hover:scale-105"
@@ -881,81 +914,7 @@ export default function App() {
                 </button>
               </div>
             ) : (
-              <>
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-                  <div>
-                    <h1 className="font-display text-6xl uppercase italic tracking-tighter mb-4">
-                      DASHBOARD DE <span className="text-primary-pink">PERFORMANCE</span>
-                    </h1>
-                    <p className="text-white/40 uppercase text-[10px] font-bold tracking-widest">Seja bem-vindo, {user?.displayName}</p>
-                  </div>
-                  <div className="bg-soft-blue text-black px-6 py-3 font-bold uppercase text-xs flex items-center gap-2">
-                    <Activity size={16} /> Live Data
-                  </div>
-                </div>
-
-                {/* Stats Grid */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {[
-                    { label: 'Total Membros', value: '1.240', change: '+12%', icon: Users },
-                    { label: 'Pedidos de Orçamento', value: quoteCount !== null ? quoteCount : '342', change: '+18%', icon: MessageCircle },
-                    { label: 'Treinos Registrados', value: '8.432', change: '+24%', icon: Activity },
-                    { label: 'Engajamento', value: '94%', change: '+2%', icon: TrendingUp },
-                  ].map((stat, i) => (
-                    <div key={i} className="bg-white/5 border border-white/10 p-6 space-y-4">
-                      <div className="flex justify-between items-start">
-                        <stat.icon size={24} className="text-soft-blue" />
-                        <span className="text-xs font-bold text-green-500">{stat.change}</span>
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-bold uppercase text-white/40 block mb-1">{stat.label}</span>
-                        <span className="font-display text-4xl leading-none">{stat.value}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Charts Section */}
-                <div className="grid lg:grid-cols-2 gap-8">
-                  <div className="bg-white/5 border border-white/10 p-8 h-[400px]">
-                    <h3 className="font-display text-2xl uppercase italic mb-8 flex items-center gap-2">
-                      <TrendingUp size={20} className="text-primary-pink" />
-                      Volume de Orçamentos
-                    </h3>
-                    <ResponsiveContainer width="100%" height="80%">
-                      <BarChart data={REPORT_DATA}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff10" />
-                        <XAxis dataKey="name" stroke="#ffffff40" fontSize={10} axisLine={false} tickLine={false} />
-                        <YAxis stroke="#ffffff40" fontSize={10} axisLine={false} tickLine={false} />
-                        <Tooltip 
-                          contentStyle={{ backgroundColor: '#141414', border: '1px solid #ffffff20', color: '#fff' }}
-                          itemStyle={{ color: '#ff2d85' }}
-                        />
-                        <Bar dataKey="sales" fill="#ff2d85" radius={[4, 4, 0, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-
-                  <div className="bg-white/5 border border-white/10 p-8 h-[400px]">
-                    <h3 className="font-display text-2xl uppercase italic mb-8 flex items-center gap-2">
-                      <Users size={20} className="text-soft-blue" />
-                      Novos Usuários
-                    </h3>
-                    <ResponsiveContainer width="100%" height="80%">
-                      <LineChart data={REPORT_DATA}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff10" />
-                        <XAxis dataKey="name" stroke="#ffffff40" fontSize={10} axisLine={false} tickLine={false} />
-                        <YAxis stroke="#ffffff40" fontSize={10} axisLine={false} tickLine={false} />
-                        <Tooltip 
-                          contentStyle={{ backgroundColor: '#141414', border: '1px solid #ffffff20', color: '#fff' }}
-                          itemStyle={{ color: '#7dd3fc' }}
-                        />
-                        <Line type="monotone" dataKey="users" stroke="#7dd3fc" strokeWidth={3} dot={{ fill: '#7dd3fc', strokeWidth: 2 }} />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </div>
-              </>
+              <AdminDashboard quoteCount={quoteCount} />
             )}
           </div>
         )}
@@ -982,7 +941,7 @@ export default function App() {
               </span>
             </div>
             <p className="text-brand-gray/60 max-w-sm mx-auto md:mx-0 text-center md:text-left">
-              Eleve seu jogo com o lifestyle fitness original. Suplementos Lin de alta performance e streetwear feito para quem não aceita menos que o topo.
+              Eleve seu jogo com o lifestyle fitness original. Streetwear e suplementação de alta performance feito para quem não aceita menos que o topo.
             </p>
             <div className="flex flex-col items-center md:items-start gap-4">
               <a 
@@ -1022,17 +981,29 @@ export default function App() {
 
           <div className="space-y-6">
             <h5 className="font-display text-xl uppercase tracking-wide">Newsletter</h5>
-            <p className="text-white/40 text-sm">Receba lançamentos exclusivos e promoções Lin direto no seu e-mail.</p>
-            <div className="relative">
+            <p className="text-white/40 text-sm">Receba lançamentos exclusivos e promoções direto no seu e-mail.</p>
+            <form onSubmit={handleNewsletterSubmit} className="relative">
               <input 
                 type="email" 
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
                 placeholder="SEU@EMAIL.COM" 
-                className="w-full bg-white/5 border-2 border-white/20 p-4 focus:border-primary-pink outline-none transition-colors font-bold text-xs"
+                disabled={newsletterStatus === 'loading'}
+                className="w-full bg-white/5 border-2 border-white/20 p-4 focus:border-primary-pink outline-none transition-colors font-bold text-xs disabled:opacity-50"
+                required
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary-pink text-white font-black p-2 hover:scale-105 active:scale-95 transition-transform">
-                <ArrowRight size={18} />
+              <button 
+                type="submit"
+                disabled={newsletterStatus === 'loading'}
+                className={`absolute right-2 top-1/2 -translate-y-1/2 font-black p-2 hover:scale-105 active:scale-95 transition-transform ${
+                  newsletterStatus === 'success' ? 'bg-green-500 text-white' : 'bg-primary-pink text-white'
+                }`}
+              >
+                {newsletterStatus === 'loading' ? '...' : newsletterStatus === 'success' ? <CheckCircle2 size={18} /> : <ArrowRight size={18} />}
               </button>
-            </div>
+            </form>
+            {newsletterStatus === 'success' && <p className="text-[10px] text-green-500 font-bold uppercase">Cadastrado com sucesso!</p>}
+            {newsletterStatus === 'error' && <p className="text-[10px] text-red-500 font-bold uppercase">Erro ao cadastrar.</p>}
           </div>
         </div>
         
@@ -1064,7 +1035,247 @@ export default function App() {
         .animate-marquee {
           animation: marquee 20s linear infinite;
         }
+        @media print {
+          nav, footer, .print\:hidden {
+            display: none !important;
+          }
+          body {
+            background: white !important;
+            color: black !important;
+          }
+          .fixed, .absolute {
+            position: relative !important;
+          }
+        }
       `}</style>
+    </div>
+  );
+}
+
+function AdminDashboard({ quoteCount }: { quoteCount: number | null }) {
+  const [quotes, setQuotes] = useState<any[]>([]);
+  const [newsletter, setNewsletter] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [copiedReport, setCopiedReport] = useState(false);
+  const [activeTab, setActiveTab] = useState<'quotes' | 'newsletter'>('quotes');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const qQuotes = query(collection(db, 'quotes'), orderBy('createdAt', 'desc'), limit(100));
+        const sQuotes = await getDocs(qQuotes);
+        setQuotes(sQuotes.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+        const qNews = query(collection(db, 'newsletter'), orderBy('createdAt', 'desc'), limit(100));
+        const sNews = await getDocs(qNews);
+        setNewsletter(sNews.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const uniqueCustomers = useMemo(() => {
+    return new Set(quotes.map(q => q.customerEmail)).size;
+  }, [quotes]);
+
+  const totalItemsOrdered = useMemo(() => {
+    return quotes.reduce((acc, q) => {
+      return acc + (q.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) || 0);
+    }, 0);
+  }, [quotes]);
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleDownloadCSV = () => {
+    const headers = ['Email', 'Itens', 'Data'];
+    const rows = quotes.map(q => [
+      q.customerEmail,
+      q.items?.map((i: any) => `${i.name}(${i.quantity}x)`).join(' | '),
+      q.createdAt?.toDate ? q.createdAt.toDate().toLocaleString('pt-BR') : '---'
+    ]);
+
+    const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `relatorio_vendas_${new Date().toLocaleDateString()}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleCopyReport = () => {
+    const text = quotes.map(q => 
+      `Cliente: ${q.customerEmail}\nItens: ${q.items?.map((i: any) => `${i.name}(${i.quantity}x)`).join(', ')}\nData: ${q.createdAt?.toDate ? q.createdAt.toDate().toLocaleString('pt-BR') : '---'}\n`
+    ).join('\n---\n\n');
+    
+    navigator.clipboard.writeText(`RELATÓRIO DE PEDIDOS - EU FICO FITNESS\nTotal de Pedidos: ${quotes.length}\n\n${text}`);
+    setCopiedReport(true);
+    setTimeout(() => setCopiedReport(false), 2000);
+  };
+
+  const handleDownloadTXT = () => {
+    const text = quotes.map(q => 
+      `CLIENTE: ${q.customerEmail}\nITENS: ${q.items?.map((i: any) => `${i.name}(${i.quantity}x)`).join(', ')}\nDATA: ${q.createdAt?.toDate ? q.createdAt.toDate().toLocaleString('pt-BR') : '---'}\n`
+    ).join('\n' + '='.repeat(40) + '\n\n');
+    
+    const content = `RELATÓRIO DE PEDIDOS - EU FICO FITNESS\nGerado em: ${new Date().toLocaleString('pt-BR')}\nTotal de Pedidos: ${quotes.length}\n\n${'='.repeat(40)}\n\n${text}`;
+    
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `relatorio_vendas_${new Date().toLocaleDateString()}.txt`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div className="space-y-12 print:text-black">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 print:hidden">
+        <div>
+          <h1 className="font-display text-4xl md:text-6xl uppercase italic tracking-tighter mb-4">
+            DASHBOARD DE <span className="text-primary-pink">PERFORMANCE</span>
+          </h1>
+          <p className="text-white/40 uppercase text-[10px] font-bold tracking-widest text-primary-pink">Relatório Exclusivo do Proprietário</p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <button 
+            onClick={handleCopyReport}
+            className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 text-[10px] font-bold uppercase hover:bg-white/10 transition-colors"
+          >
+            {copiedReport ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
+            {copiedReport ? 'Copiado!' : 'Copiar Texto'}
+          </button>
+          <button 
+            onClick={handleDownloadTXT}
+            className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 text-[10px] font-bold uppercase hover:bg-white/10 transition-colors"
+          >
+            <Download size={14} /> Baixar TXT
+          </button>
+          <button 
+            onClick={handleDownloadCSV}
+            className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 text-[10px] font-bold uppercase hover:bg-white/10 transition-colors"
+          >
+            <Download size={14} /> Baixar CSV
+          </button>
+          <button 
+            onClick={handlePrint}
+            className="flex items-center gap-2 bg-soft-blue text-black px-4 py-2 text-[10px] font-bold uppercase hover:bg-white transition-colors"
+          >
+            <Printer size={14} /> Imprimir / PDF
+          </button>
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { label: 'Clientes Únicos', value: uniqueCustomers, change: 'Base Real', icon: Users },
+          { label: 'Total de Pedidos', value: quotes.length, change: 'Histórico', icon: MessageCircle },
+          { label: 'Newsletter', value: newsletter.length, change: 'Inscritos', icon: UserPlus },
+          { label: 'Taxa de Conversão', value: quotes.length > 0 ? '98%' : '0%', change: 'Eficiência', icon: TrendingUp },
+        ].map((stat, i) => (
+          <div key={i} className="bg-white/5 border border-white/10 p-6 space-y-4 brutalist-shadow-blue hover:scale-[1.02] transition-transform print:border-black print:text-black">
+            <div className="flex justify-between items-start print:hidden">
+              <stat.icon size={24} className="text-soft-blue" />
+              <span className="text-xs font-bold text-green-500">{stat.change}</span>
+            </div>
+            <div>
+              <span className="text-[10px] font-bold uppercase text-white/40 block mb-1 print:text-black/60">{stat.label}</span>
+              <span className="font-display text-4xl leading-none">{stat.value}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="bg-white/5 border border-white/10 p-8 print:bg-transparent print:border-black print:p-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+          <div className="flex items-center gap-6">
+            <button 
+              onClick={() => setActiveTab('quotes')}
+              className={`font-display text-2xl uppercase italic flex items-center gap-3 transition-colors ${activeTab === 'quotes' ? 'text-primary-pink' : 'text-white/20 hover:text-white'}`}
+            >
+              <Users size={24} className={activeTab === 'quotes' ? 'text-primary-pink' : 'text-white/20'} />
+              Log de Pedidos
+            </button>
+            <button 
+              onClick={() => setActiveTab('newsletter')}
+              className={`font-display text-2xl uppercase italic flex items-center gap-3 transition-colors ${activeTab === 'newsletter' ? 'text-soft-blue' : 'text-white/20 hover:text-white'}`}
+            >
+              <UserPlus size={24} className={activeTab === 'newsletter' ? 'text-soft-blue' : 'text-white/20'} />
+              Inscritos Newsletter
+            </button>
+          </div>
+        </div>
+
+        {loading ? (
+          <p className="text-white/20 animate-pulse print:hidden">Carregando dados seguros...</p>
+        ) : (
+          <div className="overflow-x-auto">
+            {activeTab === 'quotes' ? (
+              <table className="w-full text-left border-collapse min-w-[600px] print:text-black">
+                <thead>
+                  <tr className="border-b border-white/10 text-[10px] uppercase tracking-widest text-white/40 font-black print:border-black print:text-black">
+                    <th className="pb-4">Email do Cliente</th>
+                    <th className="pb-4">Itens Pedidos</th>
+                    <th className="pb-4 text-right">Data e Hora</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs">
+                  {quotes.map((quote) => (
+                    <tr key={quote.id} className="border-b border-white/5 hover:bg-white/5 transition-colors group print:border-black/10">
+                      <td className="py-4 font-bold text-soft-blue underline decoration-dotted print:text-black">
+                        <a href={`mailto:${quote.customerEmail}`} title="Enviar e-mail">
+                          {quote.customerEmail}
+                        </a>
+                      </td>
+                      <td className="py-4">
+                        {quote.items?.map((item: any) => `${item.name} (${item.quantity}x)`).join(', ')}
+                      </td>
+                      <td className="py-4 text-right text-white/40 group-hover:text-white transition-colors print:text-black">
+                        {quote.createdAt?.toDate ? new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(quote.createdAt.toDate()) : '---'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <table className="w-full text-left border-collapse min-w-[300px] print:text-black">
+                <thead>
+                  <tr className="border-b border-white/10 text-[10px] uppercase tracking-widest text-white/40 font-black print:border-black print:text-black">
+                    <th className="pb-4">Email Cadastrado</th>
+                    <th className="pb-4 text-right">Data de Inscrição</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs">
+                  {newsletter.map((sub) => (
+                    <tr key={sub.id} className="border-b border-white/5 hover:bg-white/5 transition-colors group print:border-black/10">
+                      <td className="py-4 font-bold text-soft-blue underline decoration-dotted print:text-black">
+                        <a href={`mailto:${sub.email}`} title="Enviar e-mail">
+                          {sub.email}
+                        </a>
+                      </td>
+                      <td className="py-4 text-right text-white/40 group-hover:text-white transition-colors print:text-black">
+                        {sub.createdAt?.toDate ? new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(sub.createdAt.toDate()) : '---'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

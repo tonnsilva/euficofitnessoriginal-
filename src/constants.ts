@@ -2,21 +2,23 @@ import { Product } from './types';
 
 export const PRODUCTS: Product[] = [
   {
-    id: 'whey-lin-1',
-    name: 'Whey Protein Lin Isolate',
+    id: 'whey-isolate-1',
+    name: 'Whey Protein Isolate Original',
     price: 189.90,
     category: 'supplements',
     image: 'https://images.unsplash.com/photo-1593095191850-2a7330096bb7?q=80&w=1770&auto=format&fit=crop',
-    description: 'Proteína de alta performance com 100% de pureza Lin. Ganhos extremos e recuperação rápida.',
-    tag: 'BEST SELLER'
+    description: 'Proteína de alta performance com 100% de pureza. Ganhos extremos e recuperação rápida.',
+    tag: 'BEST SELLER',
+    salesPageUrl: '' // INSIRA O LINK DA PÁGINA DE VENDAS AQUI
   },
   {
-    id: 'creatine-lin-1',
-    name: 'Creatina Lin Monohidratada',
+    id: 'creatine-mono-1',
+    name: 'Creatina Monohidratada Original',
     price: 99.90,
     category: 'supplements',
     image: 'https://images.unsplash.com/photo-1594882645126-14020914d58d?q=80&w=1785&auto=format&fit=crop',
     description: 'Força bruta e explosão muscular para treinos de alta intensidade.',
+    salesPageUrl: '' // INSIRA O LINK DA PÁGINA DE VENDAS AQUI
   },
   {
     id: 'bone-original-1',
