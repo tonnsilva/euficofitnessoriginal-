@@ -6,6 +6,7 @@ export interface Product {
   price: number;
   category: Category;
   image: string;
+  variants?: string[]; // Adicionado para carrossel de modelos/cores
   description: string;
   tag?: string;
   salesPageUrl?: string;

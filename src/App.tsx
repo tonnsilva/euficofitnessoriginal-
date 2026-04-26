@@ -37,6 +37,90 @@ const REPORT_DATA = [
   { name: 'Jul', sales: 3490, users: 430 },
 ];
 
+function ProductCard({ product, addToCart }: { product: Product; addToCart: (id: string) => void }) {
+  const [activeImage, setActiveImage] = useState(product.image);
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      className="group"
+    >
+      <div className="relative aspect-[4/5] bg-neutral-900 overflow-hidden mb-4 border-2 border-white/10 group-hover:border-primary-pink transition-colors duration-300">
+        <AnimatePresence mode="wait">
+          <motion.img 
+            key={activeImage}
+            src={activeImage} 
+            alt={product.name} 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${(product.id === 'bone-original-1' || product.id === 'camiseta-fem-1' || product.id === 'camiseta-performance-original') ? 'scale-110' : 'scale-100'} ${product.tag === 'CINEMATIC' ? 'brightness-90 contrast-125 saturate-110' : ''}`}
+            style={product.tag === 'CINEMATIC' ? { filter: 'contrast(1.15) brightness(0.9) saturate(1.05) hue-rotate(-2deg)' } : {}}
+            referrerPolicy="no-referrer"
+          />
+        </AnimatePresence>
+        
+        {product.tag && (
+          <div className="absolute top-4 left-4 bg-soft-blue text-black text-[10px] font-black px-2 py-1 rotate-[-4deg] z-20">
+            {product.tag}
+          </div>
+        )}
+
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 z-10">
+          {product.salesPageUrl ? (
+            <a 
+              href={product.salesPageUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-primary-pink text-white px-6 py-3 font-bold uppercase text-xs flex items-center gap-2 hover:scale-110 active:scale-95 transition-transform brutalist-shadow-blue"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Ir para o Vendedor <ArrowRight size={16} />
+            </a>
+          ) : (
+            <button 
+              onClick={() => addToCart(product.id)}
+              className="bg-primary-pink text-white p-4 rounded-full hover:scale-110 active:scale-90 transition-transform brutalist-shadow-blue"
+            >
+              <ShoppingCart size={24} />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Variantes / Modelos */}
+      {product.variants && product.variants.length > 0 && (
+        <div className="flex gap-2 mb-4 justify-center md:justify-start overflow-x-auto pb-2 custom-scrollbar">
+          {product.variants.map((v, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveImage(v)}
+              className={`w-12 h-16 border-2 flex-shrink-0 transition-all ${activeImage === v ? 'border-primary-pink scale-105' : 'border-white/10 hover:border-white/40'}`}
+            >
+              <img src={v} alt={`Variant ${i}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="flex justify-between items-start mb-2">
+        <div>
+          <h3 className="font-display text-xl uppercase tracking-tight group-hover:text-primary-pink transition-colors">
+            {product.name}
+          </h3>
+          <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest group-hover:text-soft-blue transition-colors">
+            {product.category === 'supplements' ? 'Suplementação Original' : 'Original Apparel'}
+          </p>
+        </div>
+      </div>
+      <p className="text-white/50 text-sm line-clamp-2">{product.description}</p>
+    </motion.div>
+  );
+}
+
 export default function App() {
   const [view, setView] = useState<View>('home');
   const [activeCategory, setActiveCategory] = useState<Category | 'all'>('all');
@@ -593,62 +677,8 @@ export default function App() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
             <AnimatePresence mode="popLayout">
-              {filteredProducts.map((product, idx) => (
-                <motion.div
-                  key={product.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="group"
-                >
-                  <div className="relative aspect-[4/5] bg-neutral-900 overflow-hidden mb-6 border-2 border-white/10 group-hover:border-primary-pink transition-colors duration-300">
-                    <img 
-                      src={product.image} 
-                      alt={product.name} 
-                      className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-125 ${(product.id === 'bone-original-1' || product.id === 'camiseta-fem-1' || product.id === 'camiseta-performance-original') ? 'scale-110' : 'scale-100'} ${product.tag === 'CINEMATIC' ? 'brightness-90 contrast-125 saturate-110' : ''}`}
-                      style={product.tag === 'CINEMATIC' ? { filter: 'contrast(1.15) brightness(0.9) saturate(1.05) hue-rotate(-2deg)' } : {}}
-                      referrerPolicy="no-referrer"
-                    />
-                    {product.tag && (
-                      <div className="absolute top-4 left-4 bg-soft-blue text-black text-[10px] font-black px-2 py-1 rotate-[-4deg]">
-                        {product.tag}
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                      {product.salesPageUrl ? (
-                        <a 
-                          href={product.salesPageUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-primary-pink text-white px-6 py-3 font-bold uppercase text-xs flex items-center gap-2 hover:scale-110 active:scale-95 transition-transform brutalist-shadow-blue"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Ir para o Vendedor <ArrowRight size={16} />
-                        </a>
-                      ) : (
-                        <button 
-                          onClick={() => addToCart(product.id)}
-                          className="bg-primary-pink text-white p-4 rounded-full hover:scale-110 active:scale-90 transition-transform brutalist-shadow-blue"
-                        >
-                          <ShoppingCart size={24} />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="font-display text-xl uppercase tracking-tight group-hover:text-primary-pink transition-colors">
-                        {product.name}
-                      </h3>
-                      <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest group-hover:text-soft-blue transition-colors">
-                        {product.category === 'supplements' ? 'Suplementação Original' : 'Original Apparel'}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-white/50 text-sm line-clamp-2">{product.description}</p>
-                </motion.div>
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} addToCart={addToCart} />
               ))}
             </AnimatePresence>
           </div>
@@ -815,6 +845,32 @@ export default function App() {
 
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-8">
+                <div className="bg-white/5 border-2 border-soft-blue p-8 brutalist-shadow-blue">
+                  <h3 className="font-display text-4xl uppercase italic mb-6 flex items-center gap-3 text-soft-blue">
+                    <Zap size={32} /> Sucos Detox Originais
+                  </h3>
+                  <div className="space-y-6">
+                    <div className="border-l-2 border-soft-blue/50 pl-6">
+                      <h4 className="font-bold uppercase text-lg mb-2">Detox Verde Explosivo</h4>
+                      <p className="text-white/60 text-sm leading-relaxed">
+                        1 folha de couve, suco de 1 limão, 1 rodela de gengibre e 200ml de água de coco. Bate tudo e toma sem coar. Ideal para jejum.
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-soft-blue/50 pl-6">
+                      <h4 className="font-bold uppercase text-lg mb-2">Sujo de Melancia Termogênico</h4>
+                      <p className="text-white/60 text-sm leading-relaxed">
+                        2 fatias de melancia, 1 colher de chá de linhaça e 1 pitada de pimenta caiena. Hidratação e queima de gordura natural.
+                      </p>
+                    </div>
+                    <div className="border-l-2 border-soft-blue/50 pl-6">
+                      <h4 className="font-bold uppercase text-lg mb-2">Refrescante Abacaxi com Hortelã</h4>
+                      <p className="text-white/60 text-sm leading-relaxed">
+                        2 fatias de abacaxi, folhas de hortelã e 1 talo de salsão. Diurético potente para eliminar retenção hídrica.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="bg-white/5 border-2 border-primary-pink p-8 brutalist-shadow">
                   <h3 className="font-display text-4xl uppercase italic mb-6 flex items-center gap-3 text-primary-pink">
                     <Activity size={32} /> Exercícios e Ciência
